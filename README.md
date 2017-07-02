@@ -23,7 +23,7 @@ You will see that after clustering the shapes there is still some processing nee
 
 As it is straightforward to understand, the shape arrays can also be used to build a content-based recommendation algorithm, recommending shoes of similar shape. One could complement this with color histograms or using additional features, such as [haralick textural features](http://haralick.org/journals/TexturalFeatures.pdf), or [GIST descriptors](http://www.quaero.org/media/files/bibliographie/inria_qpr6_douze_gist_evaluation.pdf). 
 
-Of course, ultimately, if you have the budget to pay for someone to classify the shoe images, you can turn your problem into a supervised one and use Deep Learning. A series of convolutional filters will surely capture shapes, color, patterns, etc.
+Of course, ultimately, if you have the budget to pay for someone to classify the shoe images, you can turn your problem into a supervised one and use *Deep Learning*. A series of convolutional filters will capture shapes, color, patterns, etc.
 
 ## The code:
 
@@ -37,7 +37,7 @@ TO RUN:
 
 `python cluster_shoe_shapes.py --n_clusters k`
 
-Where k is the number of clusters to use. 
+Where `k` is the number of clusters to use. 
 
 Perhaps, the most usefull part of this repo is at the directory demo, where details of the process are provided. There I recommend to have a look to the notebooks in the following order: 
 

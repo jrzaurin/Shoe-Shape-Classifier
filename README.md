@@ -17,7 +17,7 @@ The steps are:
 
 2-. Use k-means (MiniBatch) to cluster the shapes
 
-You will see that after clustering the shapes there is still some processing needed to isolate the side view. If I have the time I will upload the implementation of such processing. 
+You will see that after clustering the shapes there is still some processing needed to isolate the side view. If I have the time I will upload an implementation of such processing. 
 
 ## Additional use and further improvements
 
@@ -27,7 +27,8 @@ Of course, ultimately, if you have the budget to pay for someone to classify the
 
 ## The code:
 
-I have run this example with 5000 shoe images (jpg) that are in my disk, in a dir: *data/shoe_images/* 
+I have run this example with 5000 shoe images (`jpg`) that are in my disk, in a directory: *data/shoe_images/*
+
 In the "real world" the image feed normally comes in a form of json files with urls pointing towards the images.
 
 The images are of 150 width and varying height (relative to the width). If you have a similar dataset, you could run the code by simply

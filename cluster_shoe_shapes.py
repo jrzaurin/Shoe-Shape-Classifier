@@ -1,16 +1,22 @@
 import numpy as np
 import cv2
 import os
-import shapecontext
+import argparse
+import data_utils
+import shape_context
 import morphology_utils
 import multiprocessing
 import matplotlib.pyplot as plt
 import cPickle as pickle
-import data_utils
 from joblib import Parallel, delayed
 from sklearn.cluster import MiniBatchKMeans
 
 if __name__ == '__main__':
+
+	ap = argparse.ArgumentParser()
+	ap.add_argument("--n_clusters", type=int, default="15", help="number of clusters")
+	args = vars(ap.parse_args())
+	k = args["n_clusters"]
 
 	IM_DIR = "data/shoe_images/"
 	DATA_PRODUCTS_DIR = 'data_processed/'
@@ -23,7 +29,7 @@ if __name__ == '__main__':
 			path = os.path.join(IM_DIR, img)
 			images.append(cv2.imread(path))
 
-	sc = shapecontext.ShapeContext()
+	sc = shape_context.ShapeContext()
 	def sc_array(img):
 
 		sp = morphology_utils.shape_points(img, 30)
@@ -39,7 +45,8 @@ if __name__ == '__main__':
 	# to load
 	# sc_arrays = data_utils.load_array(os.path.join(DATA_PRODUCTS_DIR, 'shoe_shape_arrays.bc'))
 
-	shoe_clusters = MiniBatchKMeans(init='k-means++', n_clusters=16, batch_size=50,
+	print "MiniBatchKMeans with {} clusters".format(k)
+	shoe_clusters = MiniBatchKMeans(init='k-means++', n_clusters=k, batch_size=50,
 			                        n_init=3, max_no_improvement=10, verbose=0)
 	shoe_clusters.fit(sc_arrays)
 	shoe_clusters_labels = shoe_clusters.labels_

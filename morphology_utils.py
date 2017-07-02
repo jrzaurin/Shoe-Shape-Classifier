@@ -6,14 +6,11 @@ import os
 import itertools
 from matplotlib.pyplot import ion
 
-# ion()
-def plot_image(imname):
-    pyl.imshow(imname)
-    pyl.show()
 
 def threshold_value(img):
-    """Returns a threshold value (0.9 or 0.98) based on whether any slice
-    of the image within a central box is enterely white (white is a bitch)
+    """
+    Returns a threshold value (0.9 or 0.98) based on whether any slice
+    of the image within a central box is enterely white (white is a bitch!)
     0.9 or 0.98 come simply from a lot of experimentation.
     """
 
@@ -33,7 +30,8 @@ def threshold_value(img):
         return 0.9
 
 def threshold_img(img):
-    """Simple wrap-up function for cv2.threshold()
+    """
+    Simple wrap-up function for cv2.threshold()
     """
 
     is_color = len(img.shape) == 3
@@ -53,7 +51,8 @@ def threshold_img(img):
 
 
 def get_edges(arr, thresh):
-    """Given an array returns the min/max where that array is less that 255*thresh
+    """
+    Given an array returns the min/max where that array is less that 255*thresh
     i.e. is not white. If all the slice array is white, returns the middle point.
     """
 
@@ -69,7 +68,8 @@ def get_edges(arr, thresh):
 
 
 def bounding_box(img):
-    """Returns right, left, lower and upper limits for the limiting box enclosing
+    """
+    Returns right, left, lower and upper limits for the limiting box enclosing
     the item (shoe, dress). Note that given the shapes and colors of some items,
     finding the contours and compute the bounding box is not a viable solution.
     """
@@ -100,7 +100,8 @@ def bounding_box(img):
 
 
 def shape_df(img, axis, nsteps):
-    """Returns a data frame with the initial and end points enclosing the product
+    """
+    Returns a data frame with the initial and end points enclosing the product
     in the image, across the x/y axis. Why a dataframe and not tuples? just for
     convenience.
     """
@@ -139,7 +140,8 @@ def shape_df(img, axis, nsteps):
 
 
 def shape_points(img, nsteps, mirrow=False, only_upper=False):
-    """Simple formatting the shape_df output to be passed to the ShapeContext class
+    """
+    Simple formatting the shape_df output to be passed to the ShapeContext class
     """
 
     if mirrow:
@@ -164,7 +166,8 @@ def shape_points(img, nsteps, mirrow=False, only_upper=False):
 
 
 def plot_shape(img, axis, df=None, nsteps=None):
-    """function to overplot the shape points onto the image img
+    """
+    function to overplot the shape points onto the image img
     """
 
     if df is not None and nsteps:

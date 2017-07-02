@@ -1,4 +1,5 @@
 import numpy as np
+import pylab as pyl
 import matplotlib.pyplot as plt
 import bcolz
 from random import sample
@@ -6,14 +7,32 @@ from sklearn.cluster import MiniBatchKMeans
 from sklearn.metrics.pairwise import pairwise_distances_argmin
 from scipy.spatial.distance import cdist,pdist
 
+
 def save_array(fname, arr):
     carr=bcolz.carray(arr, rootdir=fname, mode='w'); carr.flush()
+
 
 def load_array(fname):
     return bcolz.open(fname)[:]
 
 
+def plot_image(imname):
+    pyl.imshow(imname)
+    pyl.show()
+
+
 def plot_cluster(image_list, labels, c_id, n_images=20, cols=4):
+    """
+    helper to plot shoes/images within a cluster
+
+    Params:
+    --------
+    image_list: list with all the images
+    labels    : cluster labels
+    c_id      : id of the cluster to plot
+    n_images  : number of images in the plot
+    cols      : columns of the plot
+    """
 
     idx = np.where(labels == c_id)[0]
     idx = sample(idx, n_images)
@@ -33,6 +52,19 @@ def plot_cluster(image_list, labels, c_id, n_images=20, cols=4):
 
 
 def avg_within_ss(X, k):
+    """
+    Compute the average within-cluster sum of squares. The code here can be
+    found "almost" anywhere online
+
+    Params:
+    --------
+    X: numpy array with observations and features to be clustered
+    k: number of clusters
+
+    Returns:
+    --------
+    avgwithinss: average within-cluster sum of squares
+    """
 
     model = MiniBatchKMeans(init='k-means++', n_clusters=k, batch_size=50,
                           n_init=3, max_no_improvement=10, verbose=0)
@@ -47,6 +79,21 @@ def avg_within_ss(X, k):
 
 
 def perc_var_explained(X,k):
+    """
+    Compute the percentage of variance explained defined as between sum of squares
+    divided but the total sum of squares.
+    WARNING: It will take a while.
+    The code here can be found "almost" anywhere online.
+
+    Params:
+    --------
+    X: numpy array with observations and features to be clustered
+    k: number of clusters
+
+    Returns:
+    --------
+    pve: percentage of variance explained
+    """
 
     model = MiniBatchKMeans(init='k-means++', n_clusters=k, batch_size=50,
                           n_init=3, max_no_improvement=10, verbose=0)
@@ -62,7 +109,24 @@ def perc_var_explained(X,k):
 
     return pve
 
+
 def bic(X, k):
+    """
+    Compute the BIC score.
+    Implementarion from here:
+    http://www.aladdin.cs.cmu.edu/papers/pdfs/y2000/xmeans.pdf
+    with corrections from here:
+    https://stats.stackexchange.com/questions/90769/using-bic-to-estimate-the-number-of-k-in-kmeans
+
+    Params:
+    --------
+    X: numpy array with observations and features to be clustered
+    k: number of clusters
+
+    Returns:
+    --------
+    BIC: bic score
+    """
 
     model = MiniBatchKMeans(init='k-means++', n_clusters=k, batch_size=50,
                           n_init=3, max_no_improvement=10, verbose=0)

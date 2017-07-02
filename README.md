@@ -23,7 +23,7 @@ You will see that after clustering the shapes there is still some processing nee
 
 As it is straightforward to understand, the shape arrays can also be used to build a content-based recommendation algorithm, recommending shoes of similar shape. One could complement this with color histograms or using additional features, such as [haralick textural features](http://haralick.org/journals/TexturalFeatures.pdf), or [GIST descriptors](http://www.quaero.org/media/files/bibliographie/inria_qpr6_douze_gist_evaluation.pdf). 
 
-Of course, ultimately, if you have the budget to pay for someone to classify the shoe images, you can turn your problem into a supervised one and use *Deep Learning*. A series of convolutional filters will capture shapes, color, patterns, etc.
+Of course, ultimately, if you have the budget to pay for someone to classify the shoe images, you can turn your problem into a supervised one and use *Deep Learning*. A series of convolutional layers will capture shapes, color, patterns, etc.
 
 ## The code:
 

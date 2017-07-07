@@ -25,12 +25,13 @@ class ShapeContext(object):
     angle bin j.
     """
 
-    def __init__(self,nbins_r=6,nbins_theta=12,r_inner=0.1250,r_outer=2.5):
+    def __init__(self,nbins_r=6,nbins_theta=12,r_inner=0.1250,r_outer=2.5,wlog=False):
         self.nbins_r        = nbins_r             # number of bins in a radial direction
         self.nbins_theta    = nbins_theta         # number of bins in an angular direction
         self.r_inner        = r_inner             # inner radius
         self.r_outer        = r_outer             # outer radius
         self.nbins          = nbins_theta*nbins_r # total number of bins
+        self.wlog           = wlog                # using log10(r) or Normalize with the mean
 
     def distM(self, x):
         """
@@ -75,11 +76,12 @@ class ShapeContext(object):
         # distance matrix
         r_array = self.distM(points)
 
-        # Normalize the distance matrix by the mean distance
-        # NOTE: good results are also obtained using log10
-        # r_array_norm = np.log10(r_array)
-        mean_dist = r_array.mean()
-        r_array_norm = r_array / mean_dist
+        # Normalize the distance matrix by the mean distance or use log10
+        if self.wlog:
+            r_array_n = np.log10(r_array+1)
+        else:
+            mean_dist = r_array.mean()
+            r_array_n = r_array / mean_dist
 
         # radial bins:
         r_bin_edges = radial_edges(self.r_inner,self.r_outer,self.nbins_r)
@@ -87,7 +89,7 @@ class ShapeContext(object):
         # matrix with labels depending on the location of the points relative to each other
         r_array_bin = np.zeros((len(points),len(points)), dtype=int)
         for m in xrange(self.nbins_r):
-            r_array_bin +=  (r_array_norm < r_bin_edges[m])
+            r_array_bin +=  (r_array_n < r_bin_edges[m])
 
         # boolean matrix. True = within radius of interest
         r_bool = r_array_bin > 0

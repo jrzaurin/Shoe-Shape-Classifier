@@ -29,6 +29,8 @@ if __name__ == '__main__':
 			path = os.path.join(IM_DIR, img)
 			images.append(cv2.imread(path))
 
+	# to use log10(r) instead of normalizing by the mean distance simply
+	# sc = shape_context.ShapeContext(wlog=True)
 	sc = shape_context.ShapeContext()
 	def sc_array(img):
 

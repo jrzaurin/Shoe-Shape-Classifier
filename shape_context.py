@@ -76,6 +76,8 @@ class ShapeContext(object):
         r_array = self.distM(points)
 
         # Normalize the distance matrix by the mean distance
+        # NOTE: good results are also obtained using log10
+        # r_array_norm = np.log10(r_array)
         mean_dist = r_array.mean()
         r_array_norm = r_array / mean_dist
 
